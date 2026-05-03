@@ -58,8 +58,8 @@ public class WorkOrder : Entity
 
     public void AddService(Service service, int quantity)
     {
-        if (Status == WorkOrderStatus.Finished || Status == WorkOrderStatus.Delivered)
-            throw new DomainException("Cannot add services to a finished or delivered work order.");
+        if (Status is WorkOrderStatus.Finished or WorkOrderStatus.Delivered or WorkOrderStatus.Canceled)
+            throw new DomainException("Cannot add services to a finished, delivered or canceled work order.");
 
         var existing = _workOrderServices.FirstOrDefault(s => s.ServiceId == service.Id);
         if (existing != null)
@@ -72,8 +72,8 @@ public class WorkOrder : Entity
 
     public void AddPart(Part part, int quantity)
     {
-        if (Status == WorkOrderStatus.Finished || Status == WorkOrderStatus.Delivered)
-            throw new DomainException("Cannot add parts to a finished or delivered work order.");
+        if (Status is WorkOrderStatus.Finished or WorkOrderStatus.Delivered or WorkOrderStatus.Canceled)
+            throw new DomainException("Cannot add parts to a finished, delivered or canceled work order.");
 
         var existing = _workOrderParts.FirstOrDefault(p => p.PartId == part.Id);
         if (existing != null)
@@ -104,12 +104,13 @@ public class WorkOrder : Entity
     {
         var validTransitions = new Dictionary<WorkOrderStatus, WorkOrderStatus[]>
         {
-            { WorkOrderStatus.Received, new[] { WorkOrderStatus.Diagnosis } },
-            { WorkOrderStatus.Diagnosis, new[] { WorkOrderStatus.WaitingApproval } },
-            { WorkOrderStatus.WaitingApproval, new[] { WorkOrderStatus.InProgress, WorkOrderStatus.Received } },
-            { WorkOrderStatus.InProgress, new[] { WorkOrderStatus.Finished } },
-            { WorkOrderStatus.Finished, new[] { WorkOrderStatus.Delivered } },
-            { WorkOrderStatus.Delivered, Array.Empty<WorkOrderStatus>() }
+            { WorkOrderStatus.Received, new[] { WorkOrderStatus.Diagnosis, WorkOrderStatus.Canceled } },
+            { WorkOrderStatus.Diagnosis, new[] { WorkOrderStatus.WaitingApproval, WorkOrderStatus.Canceled } },
+            { WorkOrderStatus.WaitingApproval, new[] { WorkOrderStatus.InProgress, WorkOrderStatus.Received, WorkOrderStatus.Canceled } },
+            { WorkOrderStatus.InProgress, new[] { WorkOrderStatus.Finished, WorkOrderStatus.Canceled } },
+            { WorkOrderStatus.Finished, new[] { WorkOrderStatus.Delivered, WorkOrderStatus.Diagnosis } },
+            { WorkOrderStatus.Delivered, Array.Empty<WorkOrderStatus>() },
+            { WorkOrderStatus.Canceled, Array.Empty<WorkOrderStatus>() }
         };
 
         if (!validTransitions.TryGetValue(current, out var allowed) || !allowed.Contains(next))

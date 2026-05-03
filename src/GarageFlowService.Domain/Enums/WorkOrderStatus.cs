@@ -7,6 +7,7 @@ public enum WorkOrderStatus
     WaitingApproval = 3,
     InProgress = 4,
     Finished = 5,
-    Delivered = 6
+    Delivered = 6,
+    Canceled = 7
 }
 
