@@ -36,8 +36,6 @@ tests/
 
 ## Como iniciar o projeto
 
-### 1) Com Docker (recomendado)
-
 Na raiz do repositório (`fiap-tech-challenge-2026`):
 
 ```bash
@@ -63,49 +61,6 @@ sqlcmd -S localhost,1433 -U sa -P "FIAP@2026" -i seed-database.sql
 Swagger:
 - `http://localhost:5000/swagger`
 
-Parar containers:
-
-```bash
-docker compose down
-```
-
-### 2) Rodando localmente (sem container da API)
-
-Na raiz do repositório:
-
-```bash
-dotnet restore src/GarageFlowService.slnx
-```
-
-#### Aplicar migrações
-
-```bash
-dotnet ef database update --project src/GarageFlowService.Infrastructure --startup-project src/GarageFlowService.API
-```
-
-#### Popular com dados de teste
-
-```bash
-sqlcmd -S localhost,1433 -U sa -P "FIAP@2026" -i seed-database.sql
-```
-
-#### Rodar a API
-
-```bash
-dotnet run --project src/GarageFlowService.API
-```
-
-Com o perfil atual da API, o Swagger abre automaticamente em:
-- `https://localhost:7129/swagger`
-
-> Observação: para execução local, é necessário ter um SQL Server acessível na connection string configurada. A connection string padrão está em `appsettings.Development.json`.
-
-## Testes
-
-```bash
-dotnet test tests/GarageFlowService.Tests/GarageFlowService.Tests.csproj
-```
-
 ## Autenticação
 
 `POST /api/auth/login`
@@ -117,8 +72,6 @@ dotnet test tests/GarageFlowService.Tests/GarageFlowService.Tests.csproj
   "password": "Admin@123"
 }
 ```
-
-> Nota: As credenciais padrão são configuradas no seed database. Para produção, use credenciais seguras.
 
 ## Endpoints principais
 
