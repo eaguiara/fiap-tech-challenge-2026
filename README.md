@@ -69,7 +69,7 @@ Parar containers:
 docker compose down
 ```
 
-### 2) Rodando localmente (sem container da API)
+### 2) Rodando localmente 
 
 Na raiz do repositório:
 
