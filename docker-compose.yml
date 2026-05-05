@@ -29,6 +29,8 @@ services:
       - "1433:1433"
     volumes:
       - sqlserver_data:/var/opt/mssql
+      - ./seed-database.sql:/var/opt/mssql/seed-database.sql
+      - ./init-database.sh:/var/opt/mssql/init-database.sh
     healthcheck:
       test: /opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P "FIAP@2026" -Q "SELECT 1" -No
       interval: 10s
@@ -36,6 +38,11 @@ services:
       retries: 10
     networks:
       - workshop-network
+    command: >
+      /bin/bash -c "
+      /opt/mssql/init-database.sh &
+      /opt/mssql-tools18/bin/sqlservr
+      "
 
 volumes:
   sqlserver_data:
