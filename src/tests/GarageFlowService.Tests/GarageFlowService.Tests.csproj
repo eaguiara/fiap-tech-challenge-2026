@@ -17,12 +17,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Using Include="Xunit" />
+    <ProjectReference Include="..\..\GarageFlowService.Application\GarageFlowService.Application.csproj" />
+    <ProjectReference Include="..\..\GarageFlowService.Domain\GarageFlowService.Domain.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\GarageFlowService.Domain\GarageFlowService.Domain.csproj" />
-    <ProjectReference Include="..\..\src\GarageFlowService.Application\GarageFlowService.Application.csproj" />
+    <Using Include="Xunit" />
   </ItemGroup>
 
 </Project>
