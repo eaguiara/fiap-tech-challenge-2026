@@ -4,9 +4,7 @@
     <Project Path="GarageFlowService.Application/GarageFlowService.Application.csproj" />
     <Project Path="GarageFlowService.Domain/GarageFlowService.Domain.csproj" />
     <Project Path="GarageFlowService.Infrastructure/GarageFlowService.Infrastructure.csproj" />
-  </Folder>
-  <Folder Name="/tests/">
-    <Project Path="../tests/GarageFlowService.Tests/GarageFlowService.Tests.csproj" />
+    <Project Path="tests/GarageFlowService.Tests/GarageFlowService.Tests.csproj" />
   </Folder>
 </Solution>
 
