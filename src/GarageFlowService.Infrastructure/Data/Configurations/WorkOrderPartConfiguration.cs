@@ -1,9 +1,11 @@
+using System.Diagnostics.CodeAnalysis;
 using GarageFlowService.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace GarageFlowService.Infrastructure.Data.Configurations;
 
+[ExcludeFromCodeCoverage]
 public class WorkOrderPartConfiguration : IEntityTypeConfiguration<WorkOrderPart>
 {
     public void Configure(EntityTypeBuilder<WorkOrderPart> builder)

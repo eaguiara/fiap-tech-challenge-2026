@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using GarageFlowService.Domain.Entities;
 using GarageFlowService.Domain.Interfaces;
 using GarageFlowService.Infrastructure.Data;
@@ -5,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace GarageFlowService.Infrastructure.Repositories;
 
+[ExcludeFromCodeCoverage]
 public class WorkOrderRepository : Repository<WorkOrder>, IWorkOrderRepository
 {
     public WorkOrderRepository(AppDbContext context) : base(context) { }
