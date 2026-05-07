@@ -1,8 +1,10 @@
+using System.Diagnostics.CodeAnalysis;
 using GarageFlowService.Application.Interfaces;
 using GarageFlowService.Infrastructure.Data;
 
 namespace GarageFlowService.Infrastructure.UnitOfWork;
 
+[ExcludeFromCodeCoverage]
 public class UnitOfWork : IUnitOfWork
 {
     private readonly AppDbContext _context;

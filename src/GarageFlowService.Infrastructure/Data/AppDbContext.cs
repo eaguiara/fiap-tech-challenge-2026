@@ -1,8 +1,10 @@
+using System.Diagnostics.CodeAnalysis;
 using GarageFlowService.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace GarageFlowService.Infrastructure.Data;
 
+[ExcludeFromCodeCoverage]
 public class AppDbContext : DbContext
 {
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }

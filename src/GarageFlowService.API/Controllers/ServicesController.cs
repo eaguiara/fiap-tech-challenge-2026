@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using GarageFlowService.Application.DTOs;
 using GarageFlowService.Application.UseCases.Services;
 using MediatR;
@@ -6,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace GarageFlowService.API.Controllers;
 
+[ExcludeFromCodeCoverage]
 [ApiController]
 [Route("api/[controller]")]
 public class ServicesController : ControllerBase

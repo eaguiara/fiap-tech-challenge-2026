@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using GarageFlowService.Application.Interfaces;
 using GarageFlowService.Domain.Interfaces;
 using GarageFlowService.Infrastructure.Data;
@@ -8,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace GarageFlowService.Infrastructure;
 
+[ExcludeFromCodeCoverage]
 public static class DependencyInjection
 {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)

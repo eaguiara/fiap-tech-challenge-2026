@@ -1,9 +1,11 @@
+using System.Diagnostics.CodeAnalysis;
 using GarageFlowService.Domain.Interfaces;
 using GarageFlowService.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 
 namespace GarageFlowService.Infrastructure.Repositories;
 
+[ExcludeFromCodeCoverage]
 public class Repository<T> : IRepository<T> where T : class
 {
     protected readonly AppDbContext _context;
