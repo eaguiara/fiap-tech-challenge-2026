@@ -18,7 +18,7 @@ public class CustomerRepositoryIntegrationTests : IClassFixture<IntegrationTestF
     public async Task AddCustomer_ShouldPersistAndRetrieve()
     {
         var repository = new CustomerRepository(_fixture.DbContext);
-        var customer = new Customer("João Silva", "12345678901", "joao@email.com", "11987654321");
+        var customer = new Customer("João Silva", "joao@email.com", "11987654321", "12345678901");
 
         await repository.AddAsync(customer);
         await _fixture.DbContext.SaveChangesAsync();
@@ -36,8 +36,8 @@ public class CustomerRepositoryIntegrationTests : IClassFixture<IntegrationTestF
         _fixture.ResetDatabase();
         var repository = new CustomerRepository(_fixture.DbContext);
 
-        var customer1 = new Customer("João", "12345678901", "joao@email.com", "11987654321");
-        var customer2 = new Customer("Maria", "98765432101", "maria@email.com", "11912345678");
+        var customer1 = new Customer("João", "joao@email.com", "11987654321", "12345678901");
+        var customer2 = new Customer("Maria", "maria@email.com", "11912345678", "98765432101");
 
         await repository.AddAsync(customer1);
         await repository.AddAsync(customer2);
@@ -55,7 +55,7 @@ public class CustomerRepositoryIntegrationTests : IClassFixture<IntegrationTestF
     {
         _fixture.ResetDatabase();
         var repository = new CustomerRepository(_fixture.DbContext);
-        var customer = new Customer("João", "12345678901", "joao@email.com", "11987654321");
+        var customer = new Customer("João", "joao@email.com", "11987654321", "12345678901");
 
         await repository.AddAsync(customer);
         await _fixture.DbContext.SaveChangesAsync();
