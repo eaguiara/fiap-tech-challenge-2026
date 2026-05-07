@@ -56,7 +56,7 @@ public class WorkOrder : Entity
         SetUpdatedAt();
     }
 
-    public void AddService(Service service, int quantity)
+    public WorkOrderService AddService(Service service, int quantity)
     {
         if (Status is WorkOrderStatus.Finished or WorkOrderStatus.Delivered or WorkOrderStatus.Canceled)
             throw new DomainException("Cannot add services to a finished, delivered or canceled work order.");
@@ -65,12 +65,14 @@ public class WorkOrder : Entity
         if (existing != null)
             throw new DomainException("Service already added to this work order.");
 
-        _workOrderServices.Add(new WorkOrderService(Id, service.Id, quantity, service.Price));
+        var newService = new WorkOrderService(Id, service.Id, quantity, service.Price);
+        _workOrderServices.Add(newService);
         CalculateTotal();
         SetUpdatedAt();
+        return newService;
     }
 
-    public void AddPart(Part part, int quantity)
+    public WorkOrderPart AddPart(Part part, int quantity)
     {
         if (Status is WorkOrderStatus.Finished or WorkOrderStatus.Delivered or WorkOrderStatus.Canceled)
             throw new DomainException("Cannot add parts to a finished, delivered or canceled work order.");
@@ -79,9 +81,11 @@ public class WorkOrder : Entity
         if (existing != null)
             throw new DomainException("Part already added to this work order.");
 
-        _workOrderParts.Add(new WorkOrderPart(Id, part.Id, quantity, part.Price));
+        var newPart = new WorkOrderPart(Id, part.Id, quantity, part.Price);
+        _workOrderParts.Add(newPart);
         CalculateTotal();
         SetUpdatedAt();
+        return newPart;
     }
 
     public void CalculateTotal()
