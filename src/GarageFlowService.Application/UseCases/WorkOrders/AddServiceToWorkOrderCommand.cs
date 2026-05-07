@@ -1,6 +1,7 @@
 using GarageFlowService.Application.DTOs;
 using GarageFlowService.Domain.Interfaces;
 using GarageFlowService.Application.Interfaces;
+using GarageFlowService.Domain.Exceptions;
 using MediatR;
 
 namespace GarageFlowService.Application.UseCases.WorkOrders;
@@ -26,12 +27,14 @@ public class AddServiceToWorkOrderHandler : IRequestHandler<AddServiceToWorkOrde
     public async Task<WorkOrderDto?> Handle(AddServiceToWorkOrderCommand request, CancellationToken cancellationToken)
     {
         var workOrder = await _workOrderRepository.GetByIdWithDetailsAsync(request.WorkOrderId, cancellationToken);
-        if (workOrder is null) return null;
+        if (workOrder is null)
+            throw new DomainException($"Ordem de serviço com ID '{request.WorkOrderId}' não encontrada.");
 
         var service = await _serviceRepository.GetByIdAsync(request.ServiceId, cancellationToken);
-        if (service is null) return null;
+        if (service is null)
+            throw new DomainException($"Serviço com ID '{request.ServiceId}' não encontrado.");
 
-        workOrder.AddService(service, request.Quantity);
+        await _workOrderRepository.AddServiceToWorkOrderAsync(workOrder, service, request.Quantity, cancellationToken);
         _workOrderRepository.Update(workOrder);
         await _unitOfWork.CommitAsync(cancellationToken);
         return CreateWorkOrderHandler.MapToDto(workOrder);

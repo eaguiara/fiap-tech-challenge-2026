@@ -24,5 +24,20 @@ public class WorkOrderRepository : Repository<WorkOrder>, IWorkOrderRepository
             .Include(wo => wo.Customer)
             .Include(wo => wo.Vehicle)
             .ToListAsync(cancellationToken);
+
+    public async Task AddServiceToWorkOrderAsync(WorkOrder workOrder, Service service, int quantity, CancellationToken cancellationToken = default)
+    {
+        var workOrderService = workOrder.AddService(service, quantity);
+        _context.Set<WorkOrderService>().Add(workOrderService);
+        await Task.CompletedTask;
+    }
+
+    public async Task AddPartToWorkOrderAsync(WorkOrder workOrder, Part part, int quantity, CancellationToken cancellationToken = default)
+    {
+        var workOrderPart = workOrder.AddPart(part, quantity);
+        _context.Set<WorkOrderPart>().Add(workOrderPart);
+        await Task.CompletedTask;
+    }
 }
+
 
