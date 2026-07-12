@@ -48,6 +48,14 @@ public class WorkOrder : Entity
         SetUpdatedAt();
     }
 
+    public void ResolveBudget(bool approved)
+    {
+        if (Status != WorkOrderStatus.WaitingApproval)
+            throw new DomainException("Budget can only be resolved when the work order is waiting approval.");
+
+        UpdateStatus(approved ? WorkOrderStatus.InProgress : WorkOrderStatus.Canceled);
+    }
+
     public void AddDiagnosisNotes(string notes)
     {
         if (Status != WorkOrderStatus.Diagnosis)

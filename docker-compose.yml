@@ -10,6 +10,7 @@ services:
       - "5001:8443"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:8080
       - ConnectionStrings__DefaultConnection=Server=sqlserver,1433;Database=GarageFlowServiceDb;User Id=sa;Password=FIAP@2026;TrustServerCertificate=True;
       - Jwt__Key=GarageFlowServiceSecretKey2024!SuperSecure
       - Jwt__Issuer=GarageFlowService
