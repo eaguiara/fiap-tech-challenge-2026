@@ -2,6 +2,7 @@ using FluentAssertions;
 using Moq;
 using GarageFlowService.Application.UseCases.WorkOrders;
 using GarageFlowService.Domain.Entities;
+using GarageFlowService.Domain.Exceptions;
 using GarageFlowService.Domain.Interfaces;
 using GarageFlowService.Application.Interfaces;
 
@@ -44,6 +45,11 @@ public class AddServiceToWorkOrderCommandTests
             .Setup(x => x.GetByIdAsync(serviceId, It.IsAny<CancellationToken>()))
             .ReturnsAsync(service);
 
+        _workOrderRepositoryMock
+            .Setup(x => x.AddServiceToWorkOrderAsync(workOrder, service, 1, It.IsAny<CancellationToken>()))
+            .Callback(() => workOrder.AddService(service, 1))
+            .Returns(Task.CompletedTask);
+
         var command = new AddServiceToWorkOrderCommand(workOrderId, serviceId, 1);
         var result = await _handler.Handle(command, CancellationToken.None);
 
@@ -68,6 +74,11 @@ public class AddServiceToWorkOrderCommandTests
             .Setup(x => x.GetByIdAsync(serviceId, It.IsAny<CancellationToken>()))
             .ReturnsAsync(service);
 
+        _workOrderRepositoryMock
+            .Setup(x => x.AddServiceToWorkOrderAsync(workOrder, service, 1, It.IsAny<CancellationToken>()))
+            .Callback(() => workOrder.AddService(service, 1))
+            .Returns(Task.CompletedTask);
+
         var command = new AddServiceToWorkOrderCommand(workOrderId, serviceId, 1);
         await _handler.Handle(command, CancellationToken.None);
 
@@ -88,8 +99,8 @@ public class AddServiceToWorkOrderCommandTests
             .ReturnsAsync((WorkOrder?)null);
 
         var command = new AddServiceToWorkOrderCommand(workOrderId, serviceId, 1);
-        var result = await _handler.Handle(command, CancellationToken.None);
+        var act = () => _handler.Handle(command, CancellationToken.None);
 
-        result.Should().BeNull();
+        await act.Should().ThrowAsync<DomainException>();
     }
 }

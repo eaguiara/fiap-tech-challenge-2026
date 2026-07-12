@@ -17,6 +17,13 @@ public record WorkOrderDto(
     DateTime CreatedAt,
     DateTime UpdatedAt);
 
+public record WorkOrderStatusDto(
+    Guid Id,
+    string OrderNumber,
+    WorkOrderStatus Status,
+    string StatusDescription,
+    DateTime UpdatedAt);
+
 public record WorkOrderDetailDto(
     Guid Id,
     string OrderNumber,
@@ -41,6 +48,7 @@ public record CreateWorkOrderRequest(Guid CustomerId, Guid VehicleId, string Des
 public record UpdateWorkOrderStatusRequest(int NewStatus);
 public record AddServiceToWorkOrderRequest(Guid ServiceId, int Quantity);
 public record AddPartToWorkOrderRequest(Guid PartId, int Quantity);
+public record BudgetDecisionRequest(bool Approved);
 
 public record BudgetDto(
     string OrderNumber,

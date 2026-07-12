@@ -35,6 +35,13 @@ public class WorkOrdersController : ControllerBase
         return result is null ? NotFound() : Ok(result);
     }
 
+    [HttpGet("{id:guid}/status")]
+    public async Task<ActionResult<WorkOrderStatusDto>> GetStatus(Guid id, CancellationToken cancellationToken)
+    {
+        var result = await _mediator.Send(new GetWorkOrderStatusQuery(id), cancellationToken);
+        return result is null ? NotFound() : Ok(result);
+    }
+
     [HttpGet("{id:guid}/budget")]
     public async Task<ActionResult<BudgetDto>> GetBudget(Guid id, CancellationToken cancellationToken)
     {
@@ -57,6 +64,36 @@ public class WorkOrdersController : ControllerBase
         try
         {
             var result = await _mediator.Send(new UpdateWorkOrderStatusCommand(id, (WorkOrderStatus)request.NewStatus), cancellationToken);
+            return result is null ? NotFound() : Ok(result);
+        }
+        catch (DomainException ex)
+        {
+            return BadRequest(new { error = ex.Message });
+        }
+    }
+
+    [HttpPost("{id:guid}/status/notification")]
+    [AllowAnonymous]
+    public async Task<ActionResult<WorkOrderDto>> NotifyStatus(Guid id, [FromBody] UpdateWorkOrderStatusRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
+            var result = await _mediator.Send(new UpdateWorkOrderStatusCommand(id, (WorkOrderStatus)request.NewStatus), cancellationToken);
+            return result is null ? NotFound() : Ok(result);
+        }
+        catch (DomainException ex)
+        {
+            return BadRequest(new { error = ex.Message });
+        }
+    }
+
+    [HttpPost("{id:guid}/budget/decision")]
+    [AllowAnonymous]
+    public async Task<ActionResult<WorkOrderDto>> ResolveBudget(Guid id, [FromBody] BudgetDecisionRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
+            var result = await _mediator.Send(new ApproveBudgetCommand(id, request.Approved), cancellationToken);
             return result is null ? NotFound() : Ok(result);
         }
         catch (DomainException ex)
