@@ -17,12 +17,12 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     steps:
-      - name: upload to docker hub
+      - name: tagging image
+        run: docker tag garage_flow_v1 ${{ secrets.DOCKER_HUB_USER }}/garage_flow_v1:latest
+      - name: logging into docker hub
         uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKER_HUB_USER }}
           password: ${{ secrets.DOCKER_HUB_TOKEN }}
       - name: pushing image to docker hub
-          run: 
-            docker tag garage_flow_v1 ${{ secrets.DOCKER_HUB_USER }}/garage_flow_v1:latest
-            docker push ${{ secrets.DOCKER_HUB_USER }}/garage_flow_v1:latest
+        run: docker push ${{ secrets.DOCKER_HUB_USER }}/garage_flow_v1:latest
