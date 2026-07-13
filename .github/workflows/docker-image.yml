@@ -22,7 +22,7 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_HUB_USER }}
           password: ${{ secrets.DOCKER_HUB_TOKEN }}
-        - name: pushing image to docker hub
-          run: |
+      - name: pushing image to docker hub
+          run: 
             docker tag garage_flow_v1 ${{ secrets.DOCKER_HUB_USER }}/garage_flow_v1:latest
             docker push ${{ secrets.DOCKER_HUB_USER }}/garage_flow_v1:latest
