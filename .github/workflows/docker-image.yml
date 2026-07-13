@@ -5,18 +5,14 @@ on:
   pull_request:
     branches: ["main"]
 
-jobs:
-  build:
+jobs:   
+  build-and-push:
     runs-on: ubuntu-latest
+    needs: build
     steps:
       - uses: actions/checkout@v4
       - name: Build dockerfile
         run: docker build . -t garage_flow_v1
-        
-  upload:
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
       - name: tagging image
         run: docker tag garage_flow_v1 ${{ secrets.DOCKER_HUB_USER }}/garage_flow_v1:latest
       - name: logging into docker hub
