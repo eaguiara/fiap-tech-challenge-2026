@@ -53,5 +53,5 @@ CodeCoverage/
 TestResult.xml
 nunit-*.xml
 /src/.vs
-
-*.tfvars
+terraform.tfvars
+.terraform
