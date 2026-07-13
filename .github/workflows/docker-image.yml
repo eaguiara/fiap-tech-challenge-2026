@@ -6,10 +6,19 @@ on:
     branches: ["main"]
 
 jobs:
-  buid:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - name: Build dockerfile
         run: docker build . -t garage_flow_v1
         
+  upload:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: upload to docker hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_HUB_USER }}
+          password: ${{ secrets.DOCKER_HUB_TOKEN }}
