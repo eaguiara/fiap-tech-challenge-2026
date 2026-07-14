@@ -202,21 +202,11 @@ Credenciais padrão:
 - `POST /api/parts` (auth)
 - `PATCH /api/parts/{id}/stock` (auth)
 
-## Collection e vídeo
-
-- Collection completa das APIs: adicionar o link final da Postman Collection, Swagger exportado ou similar.
-- Vídeo demonstrativo: adicionar o link final do YouTube ou Vimeo com até 15 minutos.
-
 ## Testes
 
 ```bash
 dotnet test src/tests/GarageFlowService.Tests/GarageFlowService.Tests.csproj
 ```
-
-## Observações
-
-- A aprovação de orçamento e a atualização por notificação foram modeladas como integrações simuladas/plugáveis.
-- A solução foi organizada para demonstrar evolução sustentável da fase 1, sem reescrever a base funcional existente.
 
 ## Pré-requisitos
 
