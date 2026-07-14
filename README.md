@@ -74,12 +74,15 @@ flowchart LR
 
 - .NET 8 SDK
 - Docker Desktop ou Docker Engine + Compose
+- Acesso ao banco RDS em `garage-flow.cxcyk20y6fws.us-east-2.rds.amazonaws.com:1433`
 
 ### Subir a aplicação
 
 ```bash
 docker compose up -d --build
 ```
+
+Esse comando sobe apenas a API localmente. O banco agora é o RDS remoto configurado na connection string.
 
 ### Aplicar o banco local
 
@@ -92,7 +95,7 @@ dotnet ef database update --project src/GarageFlowService.Infrastructure --start
 ### Seed do banco
 
 ```bash
-sqlcmd -S localhost,1433 -U sa -P "FIAP@2026" -i seed-database.sql
+sqlcmd -S garage-flow.cxcyk20y6fws.us-east-2.rds.amazonaws.com,1433 -U garage_flow -P "root12345" -i seed-database.sql
 ```
 
 ### Swagger
