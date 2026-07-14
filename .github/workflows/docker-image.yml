@@ -1,0 +1,23 @@
+name: Upload Dockerfile on docker hub
+on: 
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+jobs:   
+  build-and-push:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build dockerfile
+        run: docker build . -t garage_flow_v1
+      - name: tagging image
+        run: docker tag garage_flow_v1 ${{ secrets.DOCKER_HUB_USER }}/garage_flow_v1:latest
+      - name: logging into docker hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_HUB_USER }}
+          password: ${{ secrets.DOCKER_HUB_TOKEN }}
+      - name: pushing image to docker hub
+        run: docker push ${{ secrets.DOCKER_HUB_USER }}/garage_flow_v1:latest
