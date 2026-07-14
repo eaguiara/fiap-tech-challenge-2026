@@ -1,18 +1,19 @@
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
-  name: garageflow-api
+  name: garage-flow-hpa
+  namespace: garage-flow-namespace
 spec:
   scaleTargetRef:
-    apiVersion: apps/v1
+    name: garage-flow-deployment
     kind: Deployment
-    name: garageflow-api
-  minReplicas: 2
-  maxReplicas: 5
+    apiVersion: apps/v1
+  minReplicas: 1
+  maxReplicas: 3
   metrics:
     - type: Resource
       resource:
         name: cpu
         target:
           type: Utilization
-          averageUtilization: 75
+          averageUtilization: 15
