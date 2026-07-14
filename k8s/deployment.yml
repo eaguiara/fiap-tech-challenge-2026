@@ -20,6 +20,6 @@ spec:
           image: raphaelbrodrigues/garage_flow_v1
           ports:
             - containerPort: 8080
-          env:
-            - name: TESTE
-              value: 'true'
+          envFrom:
+            - configMapRef:
+              name: garage-flow-configmap
