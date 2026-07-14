@@ -18,3 +18,9 @@ variable "sql_db_password" {
   type        = string
   description = "Senha padrão do banco"
 }
+
+variable "cluster_name" {
+  description = "Name of the local Kubernetes cluster created with kind."
+  type        = string
+  default     = "garageflow"
+}
