@@ -11,35 +11,12 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://+:8080
-      - ConnectionStrings__DefaultConnection=Server=sqlserver,1433;Database=GarageFlowServiceDb;User Id=sa;Password=FIAP@2026;TrustServerCertificate=True;
+      - ConnectionStrings__DefaultConnection=Server=garage-flow.cxcyk20y6fws.us-east-2.rds.amazonaws.com,1433;Database=garage_flow;User Id=garage_flow;Password=root12345;Encrypt=True;TrustServerCertificate=True;
       - Jwt__Key=GarageFlowServiceSecretKey2024!SuperSecure
       - Jwt__Issuer=GarageFlowService
       - Jwt__Audience=GarageFlowServiceClients
-    depends_on:
-      sqlserver:
-        condition: service_healthy
     networks:
       - workshop-network
-
-  sqlserver:
-    image: mcr.microsoft.com/mssql/server:2022-latest
-    environment:
-      SA_PASSWORD: "FIAP@2026"
-      ACCEPT_EULA: "Y"
-    ports:
-      - "1433:1433"
-    volumes:
-      - sqlserver_data:/var/opt/mssql
-    healthcheck:
-      test: /opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P "FIAP@2026" -Q "SELECT 1" -No
-      interval: 10s
-      timeout: 5s
-      retries: 10
-    networks:
-      - workshop-network
-
-volumes:
-  sqlserver_data:
 
 networks:
   workshop-network:
