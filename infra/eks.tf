@@ -15,7 +15,12 @@ module "eks" {
   }
 
   vpc_id     = aws_vpc.garage_flow_vpc.id
-  subnet_ids = [aws_subnet.garage_flow_subnet_az_a.id, aws_subnet.garage_flow_subnet_az_b.id]
+  subnet_ids = [
+    aws_subnet.garage_flow_subnet_az_a.id,
+    aws_subnet.garage_flow_subnet_az_b.id,
+    aws_subnet.garage_flow_private_subnet_az_a.id,
+    aws_subnet.garage_flow_private_subnet_az_b.id,
+  ]
 
   tags = {
     Environment = "Prod"
