@@ -1,1 +1,1 @@
-sql_db_password="root12345"
+sql_db_password = "root12345"
