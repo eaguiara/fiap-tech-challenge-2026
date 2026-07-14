@@ -1,0 +1,1 @@
+aws s3 cp s3://garage-flow-terraform-state/terraform.tfstate ../terraform.tfstate --region us-east-2
