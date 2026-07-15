@@ -5,9 +5,9 @@ metadata:
   namespace: garage-flow-namespace
 spec:
   selector:
-    app: garage-flow-pod
+    app: garage-flow-app
   ports:
     - protocol: TCP
       port: 80
       targetPort: 8080
-  type: ClusterIP
+  type: LoadBalancer
