@@ -3,6 +3,10 @@ kind: Service
 metadata:
   name: garage-flow-service
   namespace: garage-flow-namespace
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-scheme: 'internet-facing'
+    service.beta.kubernetes.io/aws-load-balancer-type: 'nlb'
+
 spec:
   selector:
     app: garage-flow-app

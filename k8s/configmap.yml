@@ -5,3 +5,4 @@ metadata:
   namespace: garage-flow-namespace
 data:
   TESTE: 'true'
+  restart: '1'
