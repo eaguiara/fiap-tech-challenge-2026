@@ -76,7 +76,6 @@ app.UseSwagger();
 app.UseSwaggerUI();
 
 app.UseMiddleware<GarageFlowService.API.Middleware.ExceptionHandlingMiddleware>();
-app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
