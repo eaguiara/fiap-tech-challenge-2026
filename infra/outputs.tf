@@ -13,3 +13,7 @@ output "eks_cluster_endpoint"{
 output "eks_cluster_arn" {
   value = module.eks.cluster_arn
 }
+
+output "elb_security_group_id" {
+  value = aws_security_group.elb_sg.id
+}
